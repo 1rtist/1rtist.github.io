@@ -130,6 +130,7 @@ function increaseScore() {
 // Function to handle jumping
 function jump() {
   if (!player.classList.contains("jump")) {
+    console.log("Jump triggered!"); // Debugging log
     player.classList.add("jump");
     setTimeout(() => {
       player.classList.remove("jump");
@@ -162,6 +163,12 @@ tryAgainButton.addEventListener("click", () => {
   player.style.left = "50px"; // Reset player position
   player.style.bottom = "50px"; // Reset player position
   gameOver = false; // Reset game over flag
+});
+
+gameArea.addEventListener("touchstart", (event) => {
+  event.preventDefault(); // Prevent default touch behavior
+  console.log("Touch detected on game area!");
+  jump();
 });
 
 // CSS for jump animation has been moved to style.css
