@@ -133,19 +133,20 @@ function jump() {
     player.classList.add("jump");
     setTimeout(() => {
       player.classList.remove("jump");
-    }, 800);
-
-    if (!gameStarted && !gameOver) {
-      startGame(); // Start the game if it hasn't started yet
-    }
+    }, 1200); // Match the duration of the jump animation in CSS
   }
 }
 
-// Event listener for jump key
+// Event listener for jump key (spacebar)
 document.addEventListener("keydown", (event) => {
   if (event.key === " ") { // Spacebar is the jump key
     jump();
   }
+});
+
+// Event listener for touch input (tap on the screen)
+document.addEventListener("touchstart", () => {
+  jump();
 });
 
 // Event listener for clicking the start screen
