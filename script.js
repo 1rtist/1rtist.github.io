@@ -101,6 +101,8 @@ function spawnObstacle() {
 
 // Function to check for collision
 function checkCollision(player, obstacle) {
+  const buffer = 10; // Adjust this value to lower sensitivity (higher = less sensitive)
+
   const playerRect = player.getBoundingClientRect();
   const obstacleRect = obstacle.getBoundingClientRect();
 
@@ -108,12 +110,12 @@ function checkCollision(player, obstacle) {
   console.log("Player Rect:", playerRect);
   console.log("Obstacle Rect:", obstacleRect);
 
-  // Check for collision
+  // Check for collision with added buffer
   const isColliding = (
-    playerRect.right > obstacleRect.left && // Player's right side is past the obstacle's left side
-    playerRect.left < obstacleRect.right && // Player's left side is before the obstacle's right side
-    playerRect.bottom > obstacleRect.top && // Player's bottom is below the obstacle's top
-    playerRect.top < obstacleRect.bottom    // Player's top is above the obstacle's bottom
+    playerRect.right - buffer > obstacleRect.left + buffer && // Player's right side is past the obstacle's left side
+    playerRect.left + buffer < obstacleRect.right - buffer && // Player's left side is before the obstacle's right side
+    playerRect.bottom - buffer > obstacleRect.top + buffer && // Player's bottom is below the obstacle's top
+    playerRect.top + buffer < obstacleRect.bottom - buffer    // Player's top is above the obstacle's bottom
   );
 
   console.log("Collision check:", isColliding);
@@ -138,13 +140,14 @@ function increaseScore() {
     if (score % 10 === 0) {
       speed += 1;
       console.log(`Speed increased to: ${speed}`);
-    }
 
-    // Decrease obstacle frequency every 10 points
-    if (score % 10 === 0) {
-      obstacleFrequency = Math.max(500, obstacleFrequency - 100); // Ensure a minimum frequency
+      // Increase obstacle frequency time by 25ms
+      obstacleFrequency += 25; // Add 25ms to the obstacle frequency
+      console.log(`Obstacle frequency increased to: ${obstacleFrequency}ms`);
+
+      // Restart obstacle spawning with the new frequency
       clearInterval(gameInterval);
-      gameInterval = setInterval(spawnObstacle, obstacleFrequency); // Restart obstacle spawning with new frequency
+      gameInterval = setInterval(spawnObstacle, obstacleFrequency);
     }
   }
 }
@@ -161,20 +164,15 @@ function jump() {
     // Stop running animation when jumping
     stopRunning();
 
-    // Add the jump class and change to the jump image
+    // Add the jump class
     player.classList.add("jump", "jumping");
 
-    // Remove the jump class and revert to the idle state when the jump ends
+    // Remove the jump class when the jump ends
     setTimeout(() => {
       player.classList.remove("jump", "jumping");
 
-      // Resume running animation if the game is still active
-      if (gameStarted && !gameOver) {
-        startRunning();
-      } else {
-        // Ensure the idle state is restored
-        player.style.backgroundImage = "url('idle.png')";
-      }
+      // Resume running animation after the jump
+      startRunning();
     }, 1200); // Match the duration of the jump animation
   }
 }
