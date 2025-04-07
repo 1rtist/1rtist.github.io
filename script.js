@@ -5,13 +5,25 @@ let gameInterval;
 let gameStarted = false; // Track if the game has started
 let gameOver = false; // Track if the game is over
 
-const player = document.querySelector("#player");
+const player = document.getElementById("player");
 const scoreDisplay = document.querySelector("#score");
 const gameArea = document.querySelector("#game-area");
 const startScreen = document.querySelector("#start-screen"); // Reference to the start screen
 const gameOverPopup = document.querySelector("#game-over-popup"); // Reference to the game over popup
 const finalScoreDisplay = document.querySelector("#final-score"); // Reference to the final score display
 const tryAgainButton = document.querySelector("#try-again-button"); // Reference to the try again button
+const backgroundMusic = document.getElementById("background-music");
+const muteButton = document.getElementById("mute-button");
+const pointSound = document.getElementById("point-sound");
+
+// Ensure the music loops forever
+backgroundMusic.loop = true;
+
+// Lower the volume of the background music
+backgroundMusic.volume = 0.5; // Set to 50% volume (adjust as needed)
+
+// Lower the volume of the point sound
+pointSound.volume = 0.7; // Set to 70% volume (adjust as needed)
 
 // Function to start the game
 function startGame() {
@@ -41,6 +53,8 @@ function resetGame() {
   // Show game over popup
   gameOverPopup.style.display = "block";
   finalScoreDisplay.textContent = `Your Score: ${score}`;
+
+  stopRunning();
 }
 
 // Function to spawn obstacles
@@ -112,6 +126,14 @@ function increaseScore() {
     score++;
     scoreDisplay.textContent = `Score: ${score}`;
 
+    // Play sound effect every 10 points
+    if (score % 10 === 0) {
+      const pointSound = document.getElementById("point-sound");
+      pointSound.currentTime = 0; // Reset the sound to the beginning
+      pointSound.play(); // Play the sound
+      console.log("10-point sound played!");
+    }
+
     // Increase speed every 10 points
     if (score % 10 === 0) {
       speed += 1;
@@ -129,19 +151,52 @@ function increaseScore() {
 
 // Function to handle jumping
 function jump() {
+  if (gameOver) return;
+
+  if (!gameStarted) startGame();
+
   if (!player.classList.contains("jump")) {
-    console.log("Jump triggered!"); // Debugging log
-    player.classList.add("jump");
+    console.log("Jump triggered!");
+
+    // Stop running animation when jumping
+    stopRunning();
+
+    // Add the jump class and change to the jump image
+    player.classList.add("jump", "jumping");
+
+    // Remove the jump class and revert to the idle state when the jump ends
     setTimeout(() => {
-      player.classList.remove("jump");
-    }, 1200); // Match the duration of the jump animation in CSS
+      player.classList.remove("jump", "jumping");
+
+      // Resume running animation if the game is still active
+      if (gameStarted && !gameOver) {
+        startRunning();
+      } else {
+        // Ensure the idle state is restored
+        player.style.backgroundImage = "url('idle.png')";
+      }
+    }, 1200); // Match the duration of the jump animation
   }
+}
+
+// Function to start running animation
+function startRunning() {
+  if (!player.classList.contains("running")) {
+    player.classList.add("running"); // Add running animation
+  }
+}
+
+// Function to stop running animation
+function stopRunning() {
+  player.classList.remove("running"); // Remove running animation
 }
 
 // Event listener for jump key (spacebar)
 document.addEventListener("keydown", (event) => {
-  if (event.key === " ") { // Spacebar is the jump key
+  if (event.key === " " && !player.classList.contains("jump")) {
     jump();
+  } else {
+    startRunning();
   }
 });
 
@@ -163,12 +218,24 @@ tryAgainButton.addEventListener("click", () => {
   player.style.left = "50px"; // Reset player position
   player.style.bottom = "50px"; // Reset player position
   gameOver = false; // Reset game over flag
+  gameStarted = false; // Allow the game to start again
 });
 
 gameArea.addEventListener("touchstart", (event) => {
   event.preventDefault(); // Prevent default touch behavior
   console.log("Touch detected on game area!");
   jump();
+});
+
+// Event listener for the mute button
+muteButton.addEventListener("click", () => {
+  if (backgroundMusic.paused) {
+    backgroundMusic.play(); // Play the music
+    muteButton.textContent = "🔊"; // Unmute icon
+  } else {
+    backgroundMusic.pause(); // Pause the music
+    muteButton.textContent = "🔇"; // Mute icon
+  }
 });
 
 // CSS for jump animation has been moved to style.css

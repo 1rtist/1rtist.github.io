@@ -15,17 +15,27 @@ body {
   overflow: hidden;
 }
 
-/* Player */
+/* Default player (idle or running state) */
 #player {
   position: absolute;
   bottom: 50px; /* Starting position */
   left: 50px; /* Position on the screen */
-  width: 100px; /* Adjust width to better fit the character */
-  height: 150px; /* Adjust height to better fit the character */
-  background-image: url('placehold.png'); /* Replace with your character image */
+  width: 100px; /* Adjust width */
+  height: 150px; /* Adjust height */
+  background-image: url('idle.png'); /* Default idle image */
   background-size: contain; /* Ensure the entire image fits within the element */
   background-position: center; /* Center the image within the element */
   background-repeat: no-repeat; /* Prevent the image from repeating */
+}
+
+/* Running animation (GIF) */
+#player.running {
+  background-image: url('running.gif'); /* Running animation GIF */
+}
+
+/* Jumping state */
+#player.jumping {
+  background-image: url('jump.png'); /* Jump image */
 }
 
 /* Obstacles */
@@ -144,4 +154,52 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 2000; /* Ensure it appears above everything else */
+}
+
+/* Center the game over popup */
+#game-over-popup {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for the element's size */
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+  color: white; /* Text color */
+  padding: 20px; /* Add some padding */
+  border-radius: 10px; /* Rounded corners */
+  text-align: center; /* Center the text inside */
+  display: none; /* Initially hidden */
+  z-index: 100; /* Ensure it appears above other elements */
+}
+
+/* Style the Try Again button */
+#try-again-button {
+  margin-top: 20px; /* Add some space above the button */
+  padding: 10px 20px; /* Add padding for a clickable area */
+  background-color: #ff2222; /* Button color */
+  color: white; /* Text color */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 16px; /* Adjust font size */
+}
+
+#try-again-button:hover {
+  background-color: #e64a19; /* Darker color on hover */
+}
+
+#mute-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#mute-button:hover {
+  background-color: #e64a19;
 }
