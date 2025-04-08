@@ -1,6 +1,6 @@
 let score = 0;
-let speed = 5; // Starting speed of the obstacles
-let obstacleFrequency = 2000; // Increase to 2000ms (2 seconds) for more spacing
+let speed = 8; // Starting speed of the obstacles
+let obstacleFrequency = 1800; // Increase to 2000ms (2 seconds) for more spacing
 let gameInterval;
 let gameStarted = false; // Track if the game has started
 let gameOver = false; // Track if the game is over
@@ -136,14 +136,14 @@ function increaseScore() {
       console.log("10-point sound played!");
     }
 
-    // Increase speed every 10 points
-    if (score % 10 === 0) {
-      speed += 1;
+    // Increase speed every 15 points
+    if (score % 15 === 0) {
+      speed += 1; // Increase the speed of the game
       console.log(`Speed increased to: ${speed}`);
 
-      // Increase obstacle frequency time by 25ms
-      obstacleFrequency += 25; // Add 25ms to the obstacle frequency
-      console.log(`Obstacle frequency increased to: ${obstacleFrequency}ms`);
+      // Adjust obstacle frequency based on speed
+      obstacleFrequency = Math.max(1800 - speed * 40, 1200); // Scale frequency with speed, but cap it at 1200ms
+      console.log(`Obstacle frequency adjusted to: ${obstacleFrequency}ms`);
 
       // Restart obstacle spawning with the new frequency
       clearInterval(gameInterval);

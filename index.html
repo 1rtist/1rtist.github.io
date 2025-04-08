@@ -2,10 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scare: Uniform Heist</title>
   <link rel="stylesheet" href="styles.css">
-  <style>
+<style>
+    /* Score display */
+    #score {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+
+    /* Title display */
+    #game-title {
+      position: absolute;
+      top: 10px;
+      right: 10px; /* Position it on the right */
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+<style>
     /* Score display */
     #score {
       position: absolute;
@@ -34,9 +56,9 @@
     <img src="titlescreen.png" alt="Scare Presents: The Uniform Heist" id="start-image" />
   </div>
   <div id="game-area">
+        <div id="score">0</div>
     <div id="player"></div> <!-- Placeholder player -->
   </div>
-  <div id="score">0</div> <!-- Score display -->
   <div id="rules">
     <h3>Rules:</h3>
     <ul>

@@ -21,8 +21,8 @@ body {
   position: absolute;
   bottom: 10%; /* Adjust based on game area height */
   left: 5%; /* Adjust based on game area width */
-  width: 10vw; /* 10% of the viewport width */
-  height: 15vh; /* 15% of the viewport height */
+  width: 15vw; /* 10% of the viewport width */
+  height: 25vh; /* 15% of the viewport height */
   background-image: url('idle.png'); /* Default idle image */
   background-size: contain; /* Ensure the entire image fits within the element */
   background-position: center; /* Center the image within the element */
@@ -42,12 +42,12 @@ body {
   background-repeat: no-repeat; /* Prevent the image from repeating */
 }
 
-/* Obstacles */
+/* Default obstacle size */
 .obstacle {
   position: absolute;
   bottom: 10%; /* Align with the ground */
-  width: 2vw; /* Reduce width to 2% of the viewport width */
-  height: 4vh; /* Reduce height to 4% of the viewport height */
+  width: min(2vw, 30px); /* Use the smaller value between 2% of the viewport width or 30px */
+  height: min(4vh, 60px); /* Use the smaller value between 4% of the viewport height or 60px */
   background-color: red; /* Keep the color for visibility */
   border-radius: 5px; /* Optional: Add rounded corners for a better look */
 }
@@ -58,13 +58,13 @@ body {
     bottom: 50px; /* Starting position */
   }
   30% {
-    bottom: 180px; /* Smooth ascent to the peak */
+    bottom: 300px; /* Higher ascent to the peak */
   }
   50% {
-    bottom: 200px; /* Pause briefly at the peak */
+    bottom: 320px; /* Pause briefly at a higher peak */
   }
   70% {
-    bottom: 180px; /* Smooth descent */
+    bottom: 300px; /* Smooth descent */
   }
   100% {
     bottom: 50px; /* Return to starting position */
@@ -72,16 +72,18 @@ body {
 }
 
 .jump {
-  animation: jump 1.2s cubic-bezier(0.4, 0, 0.6, 1); /* Longer duration for easier jumps */
+  animation: jump 1.2s cubic-bezier(0.4, 0, 0.6, 1); /* Smooth jump animation */
 }
 
 /* Score display */
 #score {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  font-size: 24px;
-  color: #333;
+  top: 10px; /* Keep it at the top */
+  left: 10px; /* Keep it in the left corner */
+  font-size: 32px; /* Increase font size for better visibility */
+  font-weight: bold; /* Make the text bold */
+  color: #333; /* Keep the same color */
+  padding: 5px 10px; /* Add some padding for spacing */
 }
 
 /* Game title */
@@ -207,4 +209,35 @@ body {
 
 #mute-button:hover {
   background-color: #e64a19;
+}
+
+/* Adjust styles for smaller screens (e.g., iPhones) */
+@media (max-width: 768px) {
+  /* Game area */
+  #game-area {
+    width: 100vw; /* Full width of the viewport */
+    height: 60vh; /* Slightly smaller height for smaller screens */
+  }
+
+  /* Player */
+  #player {
+    width: 20vw; /* Increase player size for better visibility */
+    height: 30vh; /* Increase player height */
+  }
+
+  /* Obstacles */
+  .obstacle {
+    width: min(4vw, 40px); /* Slightly larger width for better visibility */
+    height: min(6vh, 80px); /* Slightly larger height for better visibility */
+  }
+
+  /* Score display */
+  #score {
+    font-size: 20px; /* Adjust font size for smaller screens */
+  }
+
+  /* Game title */
+  #game-title {
+    font-size: 20px; /* Adjust font size for smaller screens */
+  }
 }
