@@ -35,9 +35,15 @@ function startGame() {
   gameOver = false; // Reset game over flag
   gameStarted = true; // Mark the game as started
 
-  // Spawn obstacles
-  spawnObstacle();
-  gameInterval = setInterval(spawnObstacle, obstacleFrequency);
+  // Delay obstacle spawning for smaller screens
+  const initialDelay = window.innerWidth < 768 ? 3000 : 0; // 3-second delay for smaller screens
+  console.log(`Initial obstacle delay: ${initialDelay}ms`);
+
+  setTimeout(() => {
+    // Spawn the first obstacle after the delay
+    spawnObstacle();
+    gameInterval = setInterval(spawnObstacle, obstacleFrequency);
+  }, initialDelay);
 }
 
 // Function to reset the game
