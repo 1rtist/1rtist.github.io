@@ -29,8 +29,8 @@ pointSound.volume = 0.7; // Set to 70% volume (adjust as needed)
 function startGame() {
   console.log("Game starting...");
   score = 0;
-  speed = 5;
-  obstacleFrequency = 2000; // Set initial spawn frequency
+  speed = 5; // Starting speed
+  obstacleFrequency = 2000; // Starting obstacle frequency
   scoreDisplay.textContent = `Score: ${score}`;
   gameOver = false; // Reset game over flag
   gameStarted = true; // Mark the game as started
@@ -62,14 +62,7 @@ function resetGame() {
 
   stopRunning();
 
-  // Restart the game with a delay only for smaller screens
-  const restartDelay = window.innerWidth < 768 ? obstacleFrequency * 2 : 0; // Double the obstacle frequency for smaller screens
-  console.log(`Restart obstacle delay: ${restartDelay}ms`);
-
-  setTimeout(() => {
-    console.log("Restarting game...");
-    startGame();
-  }, restartDelay);
+  console.log("Game reset. Waiting for player to click 'Try Again'.");
 }
 
 // Function to spawn obstacles
@@ -151,13 +144,13 @@ function increaseScore() {
       console.log("10-point sound played!");
     }
 
-    // Increase speed every 15 points
-    if (score % 15 === 0) {
-      speed += 1; // Increase the speed of the game
+    // Increase speed every 10 points
+    if (score % 10 === 0) {
+      speed = Math.min(speed + 1.5, 15); // Increase speed by 1.5, cap at 15
       console.log(`Speed increased to: ${speed}`);
 
       // Adjust obstacle frequency based on speed
-      obstacleFrequency = Math.max(1800 - speed * 40, 1200); // Scale frequency with speed, but cap it at 1200ms
+      obstacleFrequency = Math.max(obstacleFrequency - 100, 800); // Decrease frequency, cap at 800ms
       console.log(`Obstacle frequency adjusted to: ${obstacleFrequency}ms`);
 
       // Restart obstacle spawning with the new frequency
@@ -232,6 +225,15 @@ tryAgainButton.addEventListener("click", () => {
   player.style.bottom = "50px"; // Reset player position
   gameOver = false; // Reset game over flag
   gameStarted = false; // Allow the game to start again
+
+  // Restart the game with a delay only for smaller screens
+  const restartDelay = window.innerWidth < 768 ? obstacleFrequency * 2 : 0; // Double the obstacle frequency for smaller screens
+  console.log(`Restart obstacle delay: ${restartDelay}ms`);
+
+  setTimeout(() => {
+    console.log("Restarting game...");
+    startGame();
+  }, restartDelay);
 });
 
 gameArea.addEventListener("touchstart", (event) => {
