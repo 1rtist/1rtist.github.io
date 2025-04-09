@@ -35,8 +35,8 @@ function startGame() {
   gameOver = false; // Reset game over flag
   gameStarted = true; // Mark the game as started
 
-  // Delay obstacle spawning for smaller screens
-  const initialDelay = window.innerWidth < 768 ? 3000 : 0; // 3-second delay for smaller screens
+  // Check screen size and apply delay only for smaller screens
+  const initialDelay = window.innerWidth < 768 ? obstacleFrequency * 2 : 0; // Double the obstacle frequency for smaller screens
   console.log(`Initial obstacle delay: ${initialDelay}ms`);
 
   setTimeout(() => {
@@ -61,6 +61,15 @@ function resetGame() {
   finalScoreDisplay.textContent = `Your Score: ${score}`;
 
   stopRunning();
+
+  // Restart the game with a delay only for smaller screens
+  const restartDelay = window.innerWidth < 768 ? obstacleFrequency * 2 : 0; // Double the obstacle frequency for smaller screens
+  console.log(`Restart obstacle delay: ${restartDelay}ms`);
+
+  setTimeout(() => {
+    console.log("Restarting game...");
+    startGame();
+  }, restartDelay);
 }
 
 // Function to spawn obstacles
