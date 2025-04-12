@@ -254,12 +254,12 @@ body {
   /* Game area */
   #game-area {
     width: 100vw; /* Full width of the viewport */
-    height: 60vh; /* Slightly smaller height for smaller screens */
+    height: 80vh; /* Increase height to 80% of the viewport */
   }
 
   /* Player */
   #player {
-    bottom: -20px; /* Move the player slightly lower to touch the bottom */
+    bottom: -20px; /* Adjust the player position to align with the bottom */
     width: 30vw; /* Increase player size for better visibility */
     height: 40vh; /* Increase player height */
   }
