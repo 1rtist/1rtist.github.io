@@ -15,6 +15,8 @@ const tryAgainButton = document.querySelector("#try-again-button"); // Reference
 const backgroundMusic = document.getElementById("background-music");
 const muteButton = document.getElementById("mute-button");
 const pointSound = document.getElementById("point-sound");
+const rules = document.getElementById("rules");
+const closeRulesButton = document.getElementById("close-rules");
 
 const backgroundLayer = document.querySelector('.background-layer');
 if (!backgroundLayer) {
@@ -30,9 +32,15 @@ backgroundMusic.volume = 0.5; // Set to 50% volume (adjust as needed)
 // Lower the volume of the point sound
 pointSound.volume = 0.7; // Set to 70% volume (adjust as needed)
 
+// Hide the rules when the close button is clicked
+closeRulesButton.addEventListener("click", () => {
+  rules.style.display = "none";
+});
+
 // Function to start the game
 function startGame() {
   console.log("Game starting...");
+  rules.style.display = "none"; // Hide the rules when the game starts
   startScreen.style.display = 'none'; // Hide the start screen
 
   // Preload the GIF and switch to it once loaded

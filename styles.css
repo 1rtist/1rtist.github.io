@@ -122,7 +122,7 @@ body {
   height: auto;
 }
 
-/* Rules */
+/* Rules container */
 #rules {
   position: absolute;
   bottom: 10px; /* Keep it near the bottom */
@@ -135,6 +135,24 @@ body {
   text-align: left; /* Align text to the left */
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for separation */
   border-radius: 5px; /* Add rounded corners */
+  z-index: 1000; /* Ensure it appears above other elements */
+}
+
+/* Close button for rules */
+#close-rules {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#close-rules:hover {
+  color: #ff5722; /* Highlight the button on hover */
 }
 
 #rules h3 {
