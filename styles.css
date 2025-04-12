@@ -260,8 +260,8 @@ body {
   /* Player */
   #player {
     bottom: -20px; /* Move the player slightly lower to touch the bottom */
-    width: 35vw; /* Increase player size for better visibility */
-    height: 45vh; /* Increase player height */
+    width: 30vw; /* Increase player size for better visibility */
+    height: 40vh; /* Increase player height */
   }
 
   /* Obstacles */
