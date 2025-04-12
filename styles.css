@@ -125,14 +125,16 @@ body {
 /* Rules */
 #rules {
   position: absolute;
-  bottom: 0;
-  width: 100%;
+  bottom: 10px; /* Keep it near the bottom */
+  left: 10px; /* Align it to the left side */
+  width: auto; /* Adjust width to fit the content */
   background-color: #333; /* Dark background for contrast */
   color: white; /* White text for readability */
-  padding: 10px;
-  font-size: 14px;
-  text-align: center;
+  padding: 10px; /* Add padding for spacing */
+  font-size: 14px; /* Adjust font size */
+  text-align: left; /* Align text to the left */
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for separation */
+  border-radius: 5px; /* Add rounded corners */
 }
 
 #rules h3 {
@@ -258,8 +260,8 @@ body {
   /* Player */
   #player {
     bottom: -20px; /* Move the player slightly lower to touch the bottom */
-    width: 30vw; /* Increase player size for better visibility */
-    height: 40vh; /* Increase player height */
+    width: 40vw; /* Increase player size for better visibility */
+    height: 50vh; /* Increase player height */
   }
 
   /* Obstacles */
