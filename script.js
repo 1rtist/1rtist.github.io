@@ -37,6 +37,11 @@ closeRulesButton.addEventListener("click", () => {
   rules.style.display = "none";
 });
 
+// Ensure the close button works on touch devices
+closeRulesButton.addEventListener("touchstart", () => {
+  rules.style.display = "none";
+});
+
 // Function to start the game
 function startGame() {
   console.log("Game starting...");

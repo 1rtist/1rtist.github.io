@@ -135,7 +135,8 @@ body {
   text-align: left; /* Align text to the left */
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for separation */
   border-radius: 5px; /* Add rounded corners */
-  z-index: 1000; /* Ensure it appears above other elements */
+  z-index: 2000; /* Ensure it appears above other elements */
+  pointer-events: auto;
 }
 
 /* Close button for rules */
@@ -149,6 +150,7 @@ body {
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
+  pointer-events: auto;
 }
 
 #close-rules:hover {
