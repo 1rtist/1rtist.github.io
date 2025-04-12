@@ -19,7 +19,7 @@ body {
 /* Default player (idle or running state) */
 #player {
   position: absolute;
-  bottom: 10%; /* Adjust based on game area height */
+  bottom: 0; /* Set to 0 to align the character with the bottom of the game area */
   left: 5%; /* Adjust based on game area width */
   width: 15vw; /* 15% of the viewport width */
   height: 25vh; /* 25% of the viewport height */
@@ -84,8 +84,11 @@ body {
   left: 10px; /* Keep it in the left corner */
   font-size: 32px; /* Increase font size for better visibility */
   font-weight: bold; /* Make the text bold */
-  color: #333; /* Keep the same color */
+  color: white; /* Ensure the text color is white */
   padding: 5px 10px; /* Add some padding for spacing */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add a shadow for better readability */
+  z-index: 3; /* Ensure it appears above other elements */
+  color: white !important; /* Force the text color to white */
 }
 
 /* Game title */
@@ -220,11 +223,10 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-size: cover; /* Ensure the GIF covers the entire area */
-  background-position: center; /* Center the GIF */
+  background-size: cover; /* Ensure the image covers the entire area */
+  background-position: center; /* Center the image */
   z-index: 0; /* Place behind the player and obstacles */
   background-image: url('still background.png'); /* Static image before the game starts */
-  background-image: url('background-loop.gif');
   display: block; /* Always visible */
   transition: background-image 0.3s ease-in-out; /* Smooth transition */
   background-color: #000; /* Black background as fallback */
@@ -255,6 +257,7 @@ body {
 
   /* Player */
   #player {
+    bottom: 0; /* Ensure the character touches the bottom of the game area */
     width: 20vw; /* Increase player size for better visibility */
     height: 30vh; /* Increase player height */
   }
