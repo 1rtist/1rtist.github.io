@@ -224,6 +224,7 @@ body {
   background-position: center; /* Center the GIF */
   z-index: 0; /* Place behind the player and obstacles */
   background-image: url('still background.png'); /* Static image before the game starts */
+  background-image: url('background-loop.gif');
   display: block; /* Always visible */
   transition: background-image 0.3s ease-in-out; /* Smooth transition */
   background-color: #000; /* Black background as fallback */
