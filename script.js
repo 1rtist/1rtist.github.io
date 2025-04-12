@@ -16,6 +16,11 @@ const backgroundMusic = document.getElementById("background-music");
 const muteButton = document.getElementById("mute-button");
 const pointSound = document.getElementById("point-sound");
 
+const backgroundLayer = document.querySelector('.background-layer');
+if (!backgroundLayer) {
+  console.error("Background layer element not found!");
+}
+
 // Ensure the music loops forever
 backgroundMusic.loop = true;
 
@@ -28,6 +33,15 @@ pointSound.volume = 0.7; // Set to 70% volume (adjust as needed)
 // Function to start the game
 function startGame() {
   console.log("Game starting...");
+  startScreen.style.display = 'none'; // Hide the start screen
+
+  // Preload the GIF and switch to it once loaded
+  const gif = new Image();
+  gif.src = 'background-loop.gif';
+  gif.onload = () => {
+    backgroundLayer.classList.add('playing'); // Switch to the looping GIF
+  };
+
   score = 0;
   speed = 5; // Starting speed
   obstacleFrequency = 2000; // Starting obstacle frequency
@@ -48,6 +62,8 @@ function startGame() {
 
 // Function to reset the game
 function resetGame() {
+  console.log("Game resetting...");
+  backgroundLayer.classList.remove('playing'); // Switch back to the static image
   clearInterval(gameInterval); // Stop spawning obstacles
   gameStarted = false; // Allow the game to restart
   gameOver = true; // Set game over flag

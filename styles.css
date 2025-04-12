@@ -21,12 +21,13 @@ body {
   position: absolute;
   bottom: 10%; /* Adjust based on game area height */
   left: 5%; /* Adjust based on game area width */
-  width: 15vw; /* 10% of the viewport width */
-  height: 25vh; /* 15% of the viewport height */
+  width: 15vw; /* 15% of the viewport width */
+  height: 25vh; /* 25% of the viewport height */
   background-image: url('idle.png'); /* Default idle image */
   background-size: contain; /* Ensure the entire image fits within the element */
   background-position: center; /* Center the image within the element */
   background-repeat: no-repeat; /* Prevent the image from repeating */
+  z-index: 2; /* Ensure it's in front of the background */
 }
 
 /* Running animation (GIF) */
@@ -50,6 +51,7 @@ body {
   height: min(4vh, 60px); /* Use the smaller value between 4% of the viewport height or 60px */
   background-color: red; /* Keep the color for visibility */
   border-radius: 5px; /* Optional: Add rounded corners for a better look */
+  z-index: 2; /* Ensure it's in front of the background */
 }
 
 /* Jump animation */
@@ -209,6 +211,37 @@ body {
 
 #mute-button:hover {
   background-color: #e64a19;
+}
+
+/* Background layer for the game */
+.background-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover; /* Ensure the GIF covers the entire area */
+  background-position: center; /* Center the GIF */
+  z-index: 0; /* Place behind the player and obstacles */
+  background-image: url('still background.png'); /* Static image before the game starts */
+  display: block; /* Always visible */
+  transition: background-image 0.3s ease-in-out; /* Smooth transition */
+  background-color: #000; /* Black background as fallback */
+}
+
+/* Loop the background GIF only when the game is active */
+.background-layer.playing {
+  background-image: url('background-loop.gif'); /* Replace with your GIF file */
+}
+
+/* Keyframes for looping the background */
+@keyframes loopBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -100% 0; /* Adjust based on the GIF's width */
+  }
 }
 
 /* Adjust styles for smaller screens (e.g., iPhones) */
