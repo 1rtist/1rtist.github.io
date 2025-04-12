@@ -257,9 +257,9 @@ body {
 
   /* Player */
   #player {
-    bottom: 0; /* Ensure the character touches the bottom of the game area */
-    width: 20vw; /* Increase player size for better visibility */
-    height: 30vh; /* Increase player height */
+    bottom: -10px; /* Move the player slightly lower to touch the bottom */
+    width: 30vw; /* Increase player size for better visibility */
+    height: 40vh; /* Increase player height */
   }
 
   /* Obstacles */
