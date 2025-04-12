@@ -257,7 +257,7 @@ body {
 
   /* Player */
   #player {
-    bottom: -10px; /* Move the player slightly lower to touch the bottom */
+    bottom: -20px; /* Move the player slightly lower to touch the bottom */
     width: 30vw; /* Increase player size for better visibility */
     height: 40vh; /* Increase player height */
   }
