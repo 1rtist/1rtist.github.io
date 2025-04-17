@@ -107,49 +107,58 @@ function resetGame() {
 
 // Function to spawn obstacles
 function spawnObstacle() {
-  if (!gameStarted || gameOver) return; // Stop spawning if the game is not active
+  if (!gameStarted || gameOver) return;
 
   const obstacle = document.createElement("div");
   obstacle.classList.add("obstacle");
+
+  // Randomly select one of the three custom images
+  const objectImages = ["sofa.png", "hole.png", "trash.png"];
+  const randomImage = objectImages[Math.floor(Math.random() * objectImages.length)];
+
+  // Set the obstacle's background to the selected image
+  obstacle.style.backgroundImage = `url(${randomImage})`;
+  obstacle.style.backgroundSize = "contain";
+  obstacle.style.backgroundRepeat = "no-repeat";
+  obstacle.style.backgroundPosition = "center";
+
+
+
   gameArea.appendChild(obstacle);
 
-  let obstaclePosition = gameArea.clientWidth; // Start from the right edge
+  let obstaclePosition = gameArea.clientWidth;
   obstacle.style.left = `${obstaclePosition}px`;
 
   const obstacleInterval = setInterval(() => {
     if (gameOver) {
-      clearInterval(obstacleInterval); // Stop obstacle movement if the game is over
+      clearInterval(obstacleInterval);
       return;
     }
 
-    obstaclePosition -= speed; // Move left
+    obstaclePosition -= speed;
     obstacle.style.left = `${obstaclePosition}px`;
 
-    // Check for collision
     if (checkCollision(player, obstacle)) {
-      console.log("Collision detected! Resetting game...");
       clearInterval(obstacleInterval);
-      resetGame(); // End the game
-      return; // Stop further execution of this interval
+      resetGame();
+      return;
     }
 
-    // Remove obstacle when it goes off-screen
     if (obstaclePosition + obstacle.offsetWidth < 0) {
       clearInterval(obstacleInterval);
       if (gameArea.contains(obstacle)) {
-        gameArea.removeChild(obstacle); // Safely remove the obstacle
+        gameArea.removeChild(obstacle);
       }
       if (gameStarted && !gameOver) {
-        console.log("Obstacle avoided! Increasing score...");
-        increaseScore(); // Increase score when the obstacle is avoided
+        increaseScore();
       }
     }
-  }, 20); // Adjust interval for smoother movement
+  }, 20);
 }
 
 // Function to check for collision
 function checkCollision(player, obstacle) {
-  const buffer = 10; // Adjust this value to lower sensitivity (higher = less sensitive)
+  const buffer = 20; // Adjust this value to increase or decrease sensitivity
 
   const playerRect = player.getBoundingClientRect();
   const obstacleRect = obstacle.getBoundingClientRect();

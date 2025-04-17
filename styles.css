@@ -46,11 +46,12 @@ body {
 /* Default obstacle size */
 .obstacle {
   position: absolute;
-  bottom: 10%; /* Align with the ground */
-  width: min(2vw, 30px); /* Use the smaller value between 2% of the viewport width or 30px */
-  height: min(4vh, 60px); /* Use the smaller value between 4% of the viewport height or 60px */
-  background-color: red; /* Keep the color for visibility */
-  border-radius: 5px; /* Optional: Add rounded corners for a better look */
+  bottom: 5%; /* Align with the ground */
+  width: min(6vw, 90px) !important; /* Increase width */
+  height: min(10vh, 150px) !important; /* Increase height */
+  background-size: contain; /* Ensure the image fits within the obstacle */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  background-position: center; /* Center the image */
   z-index: 2; /* Ensure it's in front of the background */
 }
 
@@ -286,8 +287,8 @@ body {
 
   /* Obstacles */
   .obstacle {
-    width: min(4vw, 40px); /* Slightly larger width for better visibility */
-    height: min(6vh, 80px); /* Slightly larger height for better visibility */
+    width: min(10vw, 120px); /* Larger width for better visibility */
+    height: min(15vh, 180px); /* Larger height for better visibility */
   }
 
   /* Score display */
