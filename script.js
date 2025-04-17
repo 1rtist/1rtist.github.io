@@ -122,11 +122,11 @@ function spawnObstacle() {
 
   // Dynamically set obstacle size based on screen size
   if (window.innerWidth < 768) {
-    obstacle.style.width = "15vw"; // Larger width for mobile
-    obstacle.style.height = "20vh"; // Larger height for mobile
+    obstacle.style.width = "20vw"; // Larger width for mobile
+    obstacle.style.height = "30vh"; // Larger height for mobile
   } else {
-    obstacle.style.width = "90px"; // Default width for desktop
-    obstacle.style.height = "150px"; // Default height for desktop
+    obstacle.style.width = "70px"; // Default width for desktop
+    obstacle.style.height = "100px"; // Default height for desktop
   }
 
   gameArea.appendChild(obstacle);

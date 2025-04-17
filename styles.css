@@ -16,10 +16,10 @@ body {
   margin: 0 auto; /* Center the game area horizontally */
 }
 
-/* Default player (idle or running state) */
+/* Default player size */
 #player {
   position: absolute;
-  bottom: 0; /* Set to 0 to align the character with the bottom of the game area */
+  bottom: 0; /* Align with the bottom of the game area */
   left: 5%; /* Adjust based on game area width */
   width: 15vw; /* 15% of the viewport width */
   height: 25vh; /* 25% of the viewport height */
@@ -46,9 +46,9 @@ body {
 /* Default obstacle size */
 .obstacle {
   position: absolute;
-  bottom: 0%; /* Align with the ground */
-  width: min(6vw, 90px) !important; /* Increase width */
-  height: min(10vh, 150px) !important; /* Increase height */
+  bottom: 0; /* Align with the ground */
+  width: min(6vw, 90px); /* Default width */
+  height: min(10vh, 150px); /* Default height */
   background-size: contain; /* Ensure the image fits within the obstacle */
   background-repeat: no-repeat; /* Prevent the image from repeating */
   background-position: center; /* Center the image */
@@ -280,15 +280,14 @@ body {
 
   /* Player */
   #player {
-    bottom: -10; /* Align the player with the bottom of the game area */
-    width: 15vw; /* Keep the same width as the desktop version */
-    height: 25vh; /* Keep the same height as the desktop version */
+    width: 25vw; /* Increase width for better visibility */
+    height: 40vh; /* Increase height for better visibility */
   }
 
   /* Obstacles */
   .obstacle {
-    width: min(15vw, 120px); /* Increase width for better visibility */
-    height: min(20vh, 180px); /* Increase height for better visibility */
+    width: 20vw; /* Increase width for better visibility */
+    height: 30vh; /* Increase height for better visibility */
   }
 
   /* Score display */
