@@ -280,7 +280,7 @@ body {
 
   /* Player */
   #player {
-    bottom: 0; /* Align the player with the bottom of the game area */
+    bottom: -10; /* Align the player with the bottom of the game area */
     width: 15vw; /* Keep the same width as the desktop version */
     height: 25vh; /* Keep the same height as the desktop version */
   }
