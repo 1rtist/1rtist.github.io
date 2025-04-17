@@ -280,9 +280,9 @@ body {
 
   /* Player */
   #player {
-    bottom: -20px; /* Adjust the player position to align with the bottom */
-    width: 30vw; /* Increase player size for better visibility */
-    height: 40vh; /* Increase player height */
+    bottom: 0; /* Align the player with the bottom of the game area */
+    width: 15vw; /* Keep the same width as the desktop version */
+    height: 25vh; /* Keep the same height as the desktop version */
   }
 
   /* Obstacles */
