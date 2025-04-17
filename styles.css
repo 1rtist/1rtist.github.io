@@ -287,8 +287,8 @@ body {
 
   /* Obstacles */
   .obstacle {
-    width: min(10vw, 120px); /* Larger width for better visibility */
-    height: min(15vh, 180px); /* Larger height for better visibility */
+    width: min(15vw, 120px); /* Increase width for better visibility */
+    height: min(20vh, 180px); /* Increase height for better visibility */
   }
 
   /* Score display */

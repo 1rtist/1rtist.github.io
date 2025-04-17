@@ -100,8 +100,6 @@ function resetGame() {
   gameOverPopup.style.display = "block";
   finalScoreDisplay.textContent = `Your Score: ${score}`;
 
-  stopRunning();
-
   console.log("Game reset. Waiting for player to click 'Try Again'.");
 }
 
@@ -122,7 +120,14 @@ function spawnObstacle() {
   obstacle.style.backgroundRepeat = "no-repeat";
   obstacle.style.backgroundPosition = "center";
 
-
+  // Dynamically set obstacle size based on screen size
+  if (window.innerWidth < 768) {
+    obstacle.style.width = "15vw"; // Larger width for mobile
+    obstacle.style.height = "20vh"; // Larger height for mobile
+  } else {
+    obstacle.style.width = "90px"; // Default width for desktop
+    obstacle.style.height = "150px"; // Default height for desktop
+  }
 
   gameArea.appendChild(obstacle);
 
@@ -281,22 +286,17 @@ tryAgainButton.addEventListener("click", () => {
 
   // Reset the player's position
   player.style.left = "50px"; // Consistent X-axis position
-  player.style.bottom = "50px"; // Consistent Y-axis position
+  player.style.bottom = "0px"; // Align with the bottom of the game area
 
-  // Ensure the player is idle (not running or jumping)
-  player.classList.remove("running", "jump", "jumping");
+  // Remove all obstacles
+  const obstacles = document.querySelectorAll(".obstacle");
+  obstacles.forEach((obstacle) => obstacle.remove());
 
   gameOver = false; // Reset game over flag
   gameStarted = false; // Allow the game to start again
 
-  // Restart the game with a delay only for smaller screens
-  const restartDelay = window.innerWidth < 768 ? obstacleFrequency * 2 : 0; // Double the obstacle frequency for smaller screens
-  console.log(`Restart obstacle delay: ${restartDelay}ms`);
-
-  setTimeout(() => {
-    console.log("Restarting game...");
-    startGame();
-  }, restartDelay);
+  console.log("Restarting game...");
+  startGame();
 });
 
 gameArea.addEventListener("touchstart", (event) => {
