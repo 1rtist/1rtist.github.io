@@ -34,7 +34,7 @@ pointSound.volume = 0.7; // Set to 70% volume (adjust as needed)
 
 // Hide the rules when the close button is clicked
 closeRulesButton.addEventListener("click", () => {
-  rules.style.display = "none";
+  rules.style.display = "none"; // Hide the rules
 });
 
 // Ensure the close button works on touch devices
@@ -47,6 +47,10 @@ function startGame() {
   console.log("Game starting...");
   rules.style.display = "none"; // Hide the rules when the game starts
   startScreen.style.display = 'none'; // Hide the start screen
+
+  // Set the player's initial position
+  player.style.left = "50px"; // Consistent X-axis position
+  player.style.bottom = "50px"; // Consistent Y-axis position
 
   // Preload the GIF and switch to it once loaded
   const gif = new Image();
@@ -84,6 +88,13 @@ function resetGame() {
   // Remove all obstacles
   const obstacles = document.querySelectorAll(".obstacle");
   obstacles.forEach((obstacle) => obstacle.remove());
+
+  // Reset the player's position
+  player.style.left = "50px"; // Consistent X-axis position
+  player.style.bottom = "50px"; // Consistent Y-axis position
+
+  // Ensure the player is idle (not running or jumping)
+  player.classList.remove("running", "jump", "jumping");
 
   // Show game over popup
   gameOverPopup.style.display = "block";
@@ -155,6 +166,12 @@ function checkCollision(player, obstacle) {
     playerRect.top + buffer < obstacleRect.bottom - buffer    // Player's top is above the obstacle's bottom
   );
 
+  if (isColliding) {
+    console.log("Collision detected! Stopping player animations...");
+    stopRunning(); // Ensure the player stops running immediately
+    player.classList.remove("jump", "jumping"); // Remove jump-related classes if the player is jumping
+  }
+
   console.log("Collision check:", isColliding);
   return isColliding;
 }
@@ -191,9 +208,9 @@ function increaseScore() {
 
 // Function to handle jumping
 function jump() {
-  if (gameOver) return;
+  if (gameOver) return; // Prevent jumping if the game is over
 
-  if (!gameStarted) startGame();
+  if (!gameStarted) startGame(); // Start the game if it hasn't started
 
   if (!player.classList.contains("jump")) {
     console.log("Jump triggered!");
@@ -208,8 +225,10 @@ function jump() {
     setTimeout(() => {
       player.classList.remove("jump", "jumping");
 
-      // Resume running animation after the jump
-      startRunning();
+      // Resume running animation after the jump only if the game is not over
+      if (!gameOver) {
+        startRunning();
+      }
     }, 1200); // Match the duration of the jump animation
   }
 }
@@ -250,8 +269,14 @@ startScreen.addEventListener("click", () => {
 tryAgainButton.addEventListener("click", () => {
   console.log("Try Again clicked!");
   gameOverPopup.style.display = "none"; // Hide the game over popup
-  player.style.left = "50px"; // Reset player position
-  player.style.bottom = "50px"; // Reset player position
+
+  // Reset the player's position
+  player.style.left = "50px"; // Consistent X-axis position
+  player.style.bottom = "50px"; // Consistent Y-axis position
+
+  // Ensure the player is idle (not running or jumping)
+  player.classList.remove("running", "jump", "jumping");
+
   gameOver = false; // Reset game over flag
   gameStarted = false; // Allow the game to start again
 
