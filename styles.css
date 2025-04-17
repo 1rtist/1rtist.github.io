@@ -46,7 +46,7 @@ body {
 /* Default obstacle size */
 .obstacle {
   position: absolute;
-  bottom: 0; /* Align with the ground */
+  bottom: 0; /* Align with the bottom of the game area */
   width: min(6vw, 90px); /* Default width */
   height: min(10vh, 150px); /* Default height */
   background-size: contain; /* Ensure the image fits within the obstacle */
@@ -298,5 +298,23 @@ body {
   /* Game title */
   #game-title {
     font-size: 20px; /* Adjust font size for smaller screens */
+  }
+}
+
+/* Adjust player position for smaller screens */
+@media (max-width: 768px) {
+  #player {
+    bottom: 0; /* Ensure the player is touching the bottom */
+    width: 20vw; /* Keep the same width as mobile scaling */
+    height: 30vh; /* Keep the same height as mobile scaling */
+  }
+}
+
+/* Adjust obstacle size for smaller screens */
+@media (max-width: 768px) {
+  .obstacle {
+    bottom: 0; /* Ensure the obstacle is touching the bottom */
+    width: 20vw; /* Larger width for better visibility */
+    height: 30vh; /* Larger height for better visibility */
   }
 }

@@ -129,6 +129,9 @@ function spawnObstacle() {
     obstacle.style.height = "100px"; // Default height for desktop
   }
 
+  // Ensure the obstacle is aligned with the bottom
+  obstacle.style.bottom = "0px";
+
   gameArea.appendChild(obstacle);
 
   let obstaclePosition = gameArea.clientWidth;
