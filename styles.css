@@ -46,7 +46,7 @@ body {
 /* Default obstacle size */
 .obstacle {
   position: absolute;
-  bottom: 5%; /* Align with the ground */
+  bottom: 0%; /* Align with the ground */
   width: min(6vw, 90px) !important; /* Increase width */
   height: min(10vh, 150px) !important; /* Increase height */
   background-size: contain; /* Ensure the image fits within the obstacle */
