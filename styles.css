@@ -272,22 +272,18 @@ body {
 
 /* Adjust styles for smaller screens (e.g., iPhones) */
 @media (max-width: 768px) {
-  /* Game area */
-  #game-area {
-    width: 100vw; /* Full width of the viewport */
-    height: 80vh; /* Increase height to 80% of the viewport */
-  }
-
   /* Player */
   #player {
-    width: 25vw; /* Increase width for better visibility */
-    height: 40vh; /* Increase height for better visibility */
+    bottom: 0; /* Ensure the player is touching the bottom */
+    width: 30vw; /* Larger width for mobile */
+    height: 40vh; /* Larger height for mobile */
   }
 
   /* Obstacles */
   .obstacle {
-    width: 20vw; /* Increase width for better visibility */
-    height: 30vh; /* Increase height for better visibility */
+    bottom: 0; /* Ensure the obstacle is touching the bottom */
+    width: 20vw; /* Larger width for better visibility */
+    height: 30vh; /* Larger height for better visibility */
   }
 
   /* Score display */
@@ -298,40 +294,5 @@ body {
   /* Game title */
   #game-title {
     font-size: 20px; /* Adjust font size for smaller screens */
-  }
-}
-
-/* Adjust player size for mobile devices */
-@media (max-width: 768px) {
-  #player {
-    width: 20vw; /* Larger width for mobile */
-    height: 30vh; /* Larger height for mobile */
-  }
-}
-
-/* Adjust player position for smaller screens */
-@media (max-width: 768px) {
-  #player {
-    bottom: 0; /* Ensure the player is touching the bottom */
-    width: 20vw; /* Keep the same width as mobile scaling */
-    height: 30vh; /* Keep the same height as mobile scaling */
-  }
-}
-
-/* Adjust obstacle size for smaller screens */
-@media (max-width: 768px) {
-  .obstacle {
-    bottom: 0; /* Ensure the obstacle is touching the bottom */
-    width: 20vw; /* Larger width for better visibility */
-    height: 30vh; /* Larger height for better visibility */
-  }
-}
-
-/* Adjust obstacle size for mobile devices */
-@media (max-width: 768px) {
-  .obstacle {
-    width: 20vw; /* Larger width for better visibility */
-    height: 30vh; /* Larger height for better visibility */
-    bottom: 0; /* Ensure the obstacle stays at the bottom */
   }
 }
