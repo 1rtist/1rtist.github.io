@@ -280,7 +280,7 @@ tryAgainButton.addEventListener("click", () => {
 
   // Reset the player's position
   player.style.left = "50px"; // Consistent X-axis position
-  player.style.bottom = "0px"; // Align with the bottom of the game area
+ 
 
   // Remove all obstacles
   const obstacles = document.querySelectorAll(".obstacle");
