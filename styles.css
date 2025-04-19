@@ -21,8 +21,8 @@ body {
   position: absolute;
   bottom: 0; /* Align with the bottom of the game area */
   left: 5%; /* Adjust based on game area width */
-  width: 15vw; /* 15% of the viewport width */
-  height: 25vh; /* 25% of the viewport height */
+  width: 20vw; /* 15% of the viewport width */
+  height: 35vh; /* 25% of the viewport height */
   background-image: url('idle.png'); /* Default idle image */
   background-size: contain; /* Ensure the entire image fits within the element */
   background-position: center; /* Center the image within the element */
