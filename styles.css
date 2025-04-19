@@ -45,8 +45,8 @@ body {
 
 /* Default obstacle size */
 .obstacle {
-  position: absolute;
-  bottom: 0; /* Align with the bottom of the game area */
+  position: absolute; /* Ensure the obstacle is positioned relative to the game area */
+  bottom: 0; /* Align the obstacle to the bottom of the game area */
   width: min(6vw, 90px); /* Default width */
   height: min(10vh, 150px); /* Default height */
   background-size: contain; /* Ensure the image fits within the obstacle */

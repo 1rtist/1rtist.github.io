@@ -130,7 +130,7 @@ function spawnObstacle() {
   }
 
   // Ensure the obstacle is aligned with the bottom
-  obstacle.style.bottom = "0px";
+  obstacle.style.bottom = "0px"; // Keep it at the bottom
 
   gameArea.appendChild(obstacle);
 
