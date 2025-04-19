@@ -89,7 +89,7 @@ function resetGame() {
 
   // Reset the player's position
   player.style.left = "50px"; // Consistent X-axis position
-  player.style.bottom = "0px"; // Align with the bottom of the game area
+ 
 
   // Ensure the player is idle (not running or jumping)
   player.classList.remove("running", "jump", "jumping");
