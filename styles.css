@@ -16,13 +16,13 @@ body {
   margin: 0 auto; /* Center the game area horizontally */
 }
 
-/* Default player size */
+/* Default player size (for larger screens) */
 #player {
   position: absolute;
   bottom: 0; /* Align with the bottom of the game area */
   left: 5%; /* Adjust based on game area width */
-  width: 20vw; /* 15% of the viewport width */
-  height: 35vh; /* 25% of the viewport height */
+  width: 15vw; /* Default width for larger screens */
+  height: 25vh; /* Default height for larger screens */
   background-image: url('idle.png'); /* Default idle image */
   background-size: contain; /* Ensure the entire image fits within the element */
   background-position: center; /* Center the image within the element */
@@ -298,6 +298,14 @@ body {
   /* Game title */
   #game-title {
     font-size: 20px; /* Adjust font size for smaller screens */
+  }
+}
+
+/* Adjust player size for mobile devices */
+@media (max-width: 768px) {
+  #player {
+    width: 20vw; /* Larger width for mobile */
+    height: 30vh; /* Larger height for mobile */
   }
 }
 
