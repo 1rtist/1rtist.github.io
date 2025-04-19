@@ -274,16 +274,16 @@ body {
 @media (max-width: 768px) {
   /* Player */
   #player {
-    bottom: 0; /* Ensure the player is touching the bottom */
+    bottom: -10; /* Ensure the player is touching the bottom */
     width: 30vw; /* Larger width for mobile */
     height: 40vh; /* Larger height for mobile */
   }
 
   /* Obstacles */
   .obstacle {
-    bottom: 0; /* Ensure the obstacle is touching the bottom */
-    width: 20vw; /* Larger width for better visibility */
-    height: 30vh; /* Larger height for better visibility */
+    bottom: -10; /* Ensure the obstacle is touching the bottom */
+    width: 15vw; /* Larger width for better visibility */
+    height: 25vh; /* Larger height for better visibility */
   }
 
   /* Score display */
