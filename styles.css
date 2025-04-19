@@ -326,3 +326,12 @@ body {
     height: 30vh; /* Larger height for better visibility */
   }
 }
+
+/* Adjust obstacle size for mobile devices */
+@media (max-width: 768px) {
+  .obstacle {
+    width: 20vw; /* Larger width for better visibility */
+    height: 30vh; /* Larger height for better visibility */
+    bottom: 0; /* Ensure the obstacle stays at the bottom */
+  }
+}

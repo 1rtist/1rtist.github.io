@@ -120,14 +120,7 @@ function spawnObstacle() {
   obstacle.style.backgroundRepeat = "no-repeat";
   obstacle.style.backgroundPosition = "center";
 
-  // Dynamically set obstacle size based on screen size
-  if (window.innerWidth < 768) {
-    obstacle.style.width = "20vw"; // Larger width for mobile
-    obstacle.style.height = "45svh"; // Larger height for mobile
-  } else {
-    obstacle.style.width = "70px"; // Default width for desktop
-    obstacle.style.height = "100px"; // Default height for desktop
-  }
+  
 
   // Ensure the obstacle is aligned with the bottom
   obstacle.style.bottom = "0px"; // Keep it at the bottom
