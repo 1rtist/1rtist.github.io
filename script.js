@@ -48,9 +48,7 @@ function startGame() {
   rules.style.display = "none"; // Hide the rules when the game starts
   startScreen.style.display = 'none'; // Hide the start screen
 
-  // Set the player's initial position
-  player.style.left = "50px"; // Consistent X-axis position
-  player.style.bottom = "0px"; // Align with the bottom of the game area
+  // No need to set player position here; rely on CSS
 
   // Preload the GIF and switch to it once loaded
   const gif = new Image();
