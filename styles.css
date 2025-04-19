@@ -274,7 +274,7 @@ body {
 @media (max-width: 768px) {
   /* Player */
   #player {
-    bottom: -30; /* Ensure the player is touching the bottom */
+    bottom: 20; /* Ensure the player is touching the bottom */
     width: 30vw; /* Larger width for mobile */
     height: 40vh; /* Larger height for mobile */
   }
