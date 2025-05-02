@@ -4,6 +4,7 @@ let obstacleFrequency = 1800; // Increase to 2000ms (2 seconds) for more spacing
 let gameInterval;
 let gameStarted = false; // Track if the game has started
 let gameOver = false; // Track if the game is over
+let highestScore = localStorage.getItem("highestScore") || 0; // Retrieve the highest score from localStorage or default to 0
 
 const player = document.getElementById("player");
 const scoreDisplay = document.querySelector("#score");
@@ -42,21 +43,15 @@ closeRulesButton.addEventListener("touchstart", () => {
   rules.style.display = "none";
 });
 
+
 // Function to start the game
 function startGame() {
   console.log("Game starting...");
-  rules.style.display = "none"; // Hide the rules when the game starts
-  startScreen.style.display = 'none'; // Hide the start screen
 
-  // No need to set player position here; rely on CSS
+  // Hide the start screen
+  startScreen.style.display = "none";
 
-  // Preload the GIF and switch to it once loaded
-  const gif = new Image();
-  gif.src = 'background-loop.gif';
-  gif.onload = () => {
-    backgroundLayer.classList.add('playing'); // Switch to the looping GIF
-  };
-
+  // Reset game variables
   score = 0;
   speed = 5; // Starting speed
   obstacleFrequency = 2000; // Starting obstacle frequency
@@ -64,12 +59,21 @@ function startGame() {
   gameOver = false; // Reset game over flag
   gameStarted = true; // Mark the game as started
 
-  // Check screen size and apply delay only for smaller screens
+  // Start background animation
+  const gif = new Image();
+  gif.src = 'background-loop.gif';
+  gif.onload = () => {
+    backgroundLayer.classList.add('playing'); // Switch to the looping GIF
+  };
+
+  // Start the player's running animation
+  startRunning();
+
+  // Spawn the first obstacle after a delay
   const initialDelay = window.innerWidth < 768 ? obstacleFrequency * 2 : 0; // Double the obstacle frequency for smaller screens
   console.log(`Initial obstacle delay: ${initialDelay}ms`);
 
   setTimeout(() => {
-    // Spawn the first obstacle after the delay
     spawnObstacle();
     gameInterval = setInterval(spawnObstacle, obstacleFrequency);
   }, initialDelay);
@@ -77,6 +81,7 @@ function startGame() {
 
 // Function to reset the game
 function resetGame() {
+  rewardShown = false; // Allow rewards to be shown again
   console.log("Game resetting...");
   backgroundLayer.classList.remove('playing'); // Switch back to the static image
   clearInterval(gameInterval); // Stop spawning obstacles
@@ -118,8 +123,6 @@ function spawnObstacle() {
   obstacle.style.backgroundRepeat = "no-repeat";
   obstacle.style.backgroundPosition = "center";
 
-  
-
   // Ensure the obstacle is aligned with the bottom
   obstacle.style.bottom = "0px"; // Keep it at the bottom
 
@@ -139,7 +142,7 @@ function spawnObstacle() {
 
     if (checkCollision(player, obstacle)) {
       clearInterval(obstacleInterval);
-      resetGame();
+      handleCollision(); // Trigger the falling effect
       return;
     }
 
@@ -153,6 +156,9 @@ function spawnObstacle() {
       }
     }
   }, 20);
+
+  // Store the interval ID in the obstacle's dataset
+  obstacle.dataset.intervalId = obstacleInterval;
 }
 
 // Function to check for collision
@@ -268,29 +274,43 @@ document.addEventListener("touchstart", () => {
 });
 
 // Event listener for clicking the start screen
-startScreen.addEventListener("click", () => {
-  console.log("Start screen clicked!");
-  startScreen.style.display = "none"; // Hide the start screen
-});
+startScreen.addEventListener("click", startGame);
 
 // Event listener for the "Try Again" button
 tryAgainButton.addEventListener("click", () => {
   console.log("Try Again clicked!");
-  gameOverPopup.style.display = "none"; // Hide the game over popup
 
-  // Reset the player's position
-  player.style.left = "50px"; // Consistent X-axis position
- 
+  // Hide the game over popup
+  gameOverPopup.style.display = "none";
+
+  // Reset the player's position and state
+  player.style.left = "50px"; // Reset X-axis position
+  player.classList.remove("falling", "jump", "jumping", "running"); // Remove all animations
+
+  // Reset the background
+  gameArea.classList.remove("infinite-space"); // Remove the infinite space effect
+  backgroundLayer.classList.remove("playing"); // Reset the background animation
 
   // Remove all obstacles
   const obstacles = document.querySelectorAll(".obstacle");
-  obstacles.forEach((obstacle) => obstacle.remove());
+  obstacles.forEach((obstacle) => {
+    clearInterval(obstacle.dataset.intervalId); // Clear the interval for each obstacle
+    obstacle.remove(); // Remove the obstacle from the DOM
+  });
 
+  // Clear the main obstacle spawning interval
+  clearInterval(gameInterval);
+
+  // Reset game variables
+  score = 0;
+  speed = 5; // Reset speed
+  obstacleFrequency = 2000; // Reset obstacle frequency
+  scoreDisplay.textContent = `Score: ${score}`;
   gameOver = false; // Reset game over flag
   gameStarted = false; // Allow the game to start again
 
   console.log("Restarting game...");
-  startGame();
+  startGame(); // Start the game fresh
 });
 
 gameArea.addEventListener("touchstart", (event) => {
@@ -310,4 +330,170 @@ muteButton.addEventListener("click", () => {
   }
 });
 
+// Function to trigger flash effect
+function triggerFlash() {
+  // Create the flash element
+  const flash = document.createElement('div');
+  flash.classList.add('flash');
+
+  // Add the flash to the game area
+  document.body.appendChild(flash);
+
+  // Remove the flash after the animation ends
+  setTimeout(() => {
+    if (document.body.contains(flash)) {
+      document.body.removeChild(flash);
+    }
+  }, 300); // Match the animation duration (0.3s)
+}
+
 // CSS for jump animation has been moved to style.css
+
+function handleCollision() {
+  console.log("Collision detected!");
+
+  // Stop the game
+  gameOver = true;
+
+  // Remove the background
+  gameArea.classList.add("infinite-space");
+
+  // Trigger the player falling effect
+  player.classList.add("falling");
+
+  // Stop the background music
+  backgroundMusic.pause();
+
+  // Check if the player qualifies for a reward
+  const reward = getReward(score);
+  if (reward) {
+    // Show reward screen and play winning sound
+    showRewardScreen(score);
+  } else {
+    // Play the losing sound effect if no reward is won
+    const loseSound = document.getElementById("lose-sound");
+    loseSound.currentTime = 0; // Reset the sound to the beginning
+    loseSound.play();
+    loseSound.volume = 0.7; // Set to 70% volume (adjust as needed)
+
+    // Remove any existing event listeners to avoid duplication
+    loseSound.removeEventListener("ended", resumeBackgroundMusic);
+
+    // Add the event listener to resume background music after the losing sound finishes
+    loseSound.addEventListener("ended", resumeBackgroundMusic);
+  }
+
+  // Update the highest score
+  if (score > highestScore) {
+    highestScore = score; // Update the highest score
+    localStorage.setItem("highestScore", highestScore); // Save the highest score to localStorage
+  }
+
+  // Optional: Add a delay before showing the "Game Over" popup
+  setTimeout(() => {
+    gameOverPopup.style.display = "block";
+    finalScoreDisplay.textContent = `Your Score: ${score}`;
+    const highestScoreDisplay = document.getElementById("highest-score");
+    highestScoreDisplay.textContent = `Highest Score: ${highestScore}`; // Display the highest score
+  }, 2000); // Wait for the falling animation to finish
+}
+
+// Function to resume background music
+function resumeBackgroundMusic() {
+  backgroundMusic.play();
+}
+
+// Reward thresholds and codes
+const rewards = [
+  { score: 50, title: "10% OFF the UNIFORM", code: "use code: INFILTRATE10" },
+  { score: 100, title: "15% OFF the UNIFORM", code: "use code: INFILTRATE15" },
+  { score: 300, title: "25% OFF the UNIFORM", code: "use code: INFILTRATE25" },
+  { score: 500, title: "Free Uniforms Shirt", code: "use code: STYLEHEIST" },
+];
+
+// Function to get the highest reward based on score
+function getReward(score) {
+  for (let i = rewards.length - 1; i >= 0; i--) {
+    if (score >= rewards[i].score) {
+      return rewards[i];
+    }
+  }
+  return null;
+}
+
+// Function to show the reward screen
+function showRewardScreen(score) {
+  const reward = getReward(score);
+  if (!reward) return; // No reward if score is below the minimum threshold
+
+  const rewardOverlay = document.getElementById("reward-overlay");
+  const caseClosed = document.getElementById("case-closed");
+  const caseOpened = document.getElementById("case-opened");
+  const rewardTitle = document.getElementById("reward-title");
+  const rewardCode = document.getElementById("reward-code");
+  const copyCodeButton = document.getElementById("copy-code");
+  const shopNowButton = document.getElementById("shop-now");
+  const countdownTimer = document.getElementById("countdown-timer");
+  const closeRewardButton = document.getElementById("close-reward");
+  const winningSound = document.getElementById("winning-sound"); // Reference to the winning sound
+
+  // Initially hide the close button
+  closeRewardButton.style.display = "none";
+
+  // Play the winning sound
+  winningSound.currentTime = 0; // Reset the sound to the beginning
+  winningSound.play();
+  winningSound.volume = 0.7; // Set to 70% volume (adjust as needed)
+
+  // Set reward details
+  rewardTitle.textContent = `You Unlocked: ${reward.title}`;
+  rewardCode.textContent = reward.code;
+
+  // Show the reward overlay
+  rewardOverlay.style.display = "flex";
+
+  // Handle case opening animation
+  caseClosed.addEventListener("click", () => {
+    caseClosed.style.display = "none";
+    caseOpened.style.display = "block";
+    startCountdown(15 * 60, countdownTimer); // Start 15-minute countdown
+
+    // Show the close button after the code is revealed
+    closeRewardButton.style.display = "block";
+  });
+
+  // Copy code to clipboard
+  copyCodeButton.addEventListener("click", () => {
+    navigator.clipboard.writeText(reward.code).then(() => {
+      alert("Code copied to clipboard!");
+    });
+  });
+
+  // Redirect to shop
+  shopNowButton.addEventListener("click", () => {
+    window.location.href = "https://scaresociety.org/collections/frontpage"; // Replace with your shop URL
+  });
+
+  // Close the reward screen
+  closeRewardButton.addEventListener("click", () => {
+    rewardOverlay.style.display = "none";
+  });
+}
+
+// Function to start the countdown timer
+function startCountdown(duration, display) {
+  let timer = duration;
+  const interval = setInterval(() => {
+    const minutes = Math.floor(timer / 60);
+    const seconds = timer % 60;
+    display.textContent = `Expires in: ${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    timer--;
+
+    if (timer < 0) {
+      clearInterval(interval);
+      display.textContent = "Reward expired!";
+    }
+  }, 1000);
+}
+
+

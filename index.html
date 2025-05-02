@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scare: Uniform Heist</title>
-  <link rel="stylesheet" href="styles.css?cache-bust=<%= Date.now() %>">
+  <link rel="stylesheet" href="styles.css?cache-bust=s<%= Date.now() %>">
   <link rel="preload" href="background-loop.gif" as="image">
 <style>
     /* Score display */
@@ -42,8 +42,8 @@
 <body>
   <div id="game-title">Scare: Uniform Heist</div>
   <div id="start-screen">
-    <img src="titlescreen.png" alt="Scare Presents: The Uniform Heist" id="start-image" />
-  </div>
+  <img src="titlescreen.png" alt="Scare Presents: The Uniform Heist" id="start-image" />
+</div>
   <div id="game-area">
     <div class="background-layer"></div>
     <!-- Player and obstacles -->
@@ -55,19 +55,39 @@
     <h3>Rules:</h3>
     <ul>
       <li>tap or press the spacebar to jump.</li>
-      <li>avoid the obstacles to survive.</li>
       <li>your score increases as you avoid obstacles.</li>
-     <li>top 10 high scores get a free scare uniform t-shirt </li>
+     <li>50+ points = 10% off </li>
+     <li>100+ points = 15% off </li>
+     <li>300+ points = 25% off </li>
+     <li>500+ points = FREE UNIFORM TSHIRT </li>
     </ul>
   </div>
   <div id="game-over-popup" style="display: none;">
     <h1>YOU GOT CAUGHT!</h1>
     <p id="final-score">Your Score: 0</p>
+    <p id="highest-score">Highest Score: 0</p>
     <button id="try-again-button">Try Again</button>
+  </div>
+  <div id="reward-overlay" style="display: none;">
+    <div id="reward-case">
+      <button id="close-reward" class="close-button">X</button>
+      <div id="case-closed">
+        <p>Click to Open</p>
+      </div>
+      <div id="case-opened" style="display: none;">
+        <h2 id="reward-title"></h2>
+        <p id="reward-code"></p>
+        <button id="copy-code">Copy Code</button>
+        <button id="shop-now">Shop Now</button>
+        <p id="countdown-timer"></p>
+      </div>
+    </div>
   </div>
   <button id="mute-button">🔊</button>
   <audio id="point-sound" src="sound_effect.mp3"></audio>
   <audio id="background-music" src="soundtrack.mp3" loop autoplay></audio>
+  <audio id="lose-sound" src="youlose.mp3"></audio>
+  <audio id="winning-sound" src="victorysound.mp3"></audio>
   <script src="script.js?cache-bust=<%= Date.now() %>"></script>
 </body>
 </html>
