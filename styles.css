@@ -506,3 +506,29 @@ body {
   }
 }
 
+footer {
+  position: fixed;
+  bottom: 10px; /* Position it slightly above the bottom edge */
+  left: 50%;
+  transform: translateX(-50%); /* Center it horizontally */
+  text-align: center;
+  z-index: 1000; /* Ensure it appears above other elements */
+}
+
+#instagram-link {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  background-color: #e1306c; /* Instagram pink */
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(225, 48, 108, 0.5);
+  transition: all 0.3s ease;
+}
+
+#instagram-link:hover {
+  background-color: #c1275b; /* Darker pink on hover */
+  box-shadow: 0 0 15px rgba(225, 48, 108, 0.8);
+}
+
