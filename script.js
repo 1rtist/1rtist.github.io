@@ -5,6 +5,7 @@ let gameInterval;
 let gameStarted = false; // Track if the game has started
 let gameOver = false; // Track if the game is over
 let highestScore = localStorage.getItem("highestScore") || 0; // Retrieve the highest score from localStorage or default to 0
+let isMuted = false; // Track if the game is muted
 
 const player = document.getElementById("player");
 const scoreDisplay = document.querySelector("#score");
@@ -114,7 +115,7 @@ function spawnObstacle() {
   obstacle.classList.add("obstacle");
 
   // Randomly select one of the three custom images
-  const objectImages = ["sofa.png", "hole.png", "trash.png"];
+  const objectImages = ["trash.png", "hole.png", "dog.png"];
   const randomImage = objectImages[Math.floor(Math.random() * objectImages.length)];
 
   // Set the obstacle's background to the selected image
@@ -217,6 +218,9 @@ function increaseScore() {
       clearInterval(gameInterval);
       gameInterval = setInterval(spawnObstacle, obstacleFrequency);
     }
+
+    // Update the progress meter
+    updateProgressMeter(score);
   }
 }
 
@@ -321,12 +325,14 @@ gameArea.addEventListener("touchstart", (event) => {
 
 // Event listener for the mute button
 muteButton.addEventListener("click", () => {
-  if (backgroundMusic.paused) {
-    backgroundMusic.play(); // Play the music
-    muteButton.textContent = "🔊"; // Unmute icon
-  } else {
+  isMuted = !isMuted; // Toggle the mute state
+
+  if (isMuted) {
     backgroundMusic.pause(); // Pause the music
     muteButton.textContent = "🔇"; // Mute icon
+  } else {
+    backgroundMusic.play(); // Play the music
+    muteButton.textContent = "🔊"; // Unmute icon
   }
 });
 
@@ -374,7 +380,7 @@ function handleCollision() {
     const loseSound = document.getElementById("lose-sound");
     loseSound.currentTime = 0; // Reset the sound to the beginning
     loseSound.play();
-    loseSound.volume = 0.7; // Set to 70% volume (adjust as needed)
+    loseSound.volume = 0.3; // Set to 30% volume (adjust as needed)
 
     // Remove any existing event listeners to avoid duplication
     loseSound.removeEventListener("ended", resumeBackgroundMusic);
@@ -405,10 +411,10 @@ function resumeBackgroundMusic() {
 
 // Reward thresholds and codes
 const rewards = [
-  { score: 50, title: "10% OFF the UNIFORM", code: "use code: INFILTRATE10" },
-  { score: 100, title: "15% OFF the UNIFORM", code: "use code: INFILTRATE15" },
-  { score: 300, title: "25% OFF the UNIFORM", code: "use code: INFILTRATE25" },
-  { score: 500, title: "Free Uniforms Shirt", code: "use code: STYLEHEIST" },
+  { score: 50, title: "10% OFF the UNIFORM", code: "use code: youcoulddobetter" },
+  { score: 100, title: "15% OFF the UNIFORM", code: "use code: thatsalilbetter" },
+  { score: 300, title: "25% OFF the UNIFORM", code: "use code: okchilloutyoucantdobetterthenthis" },
+  { score: 5, title: "Free Uniforms Shirt", code: "use code: 500?youreallydidthat?" },
 ];
 
 // Function to get the highest reward based on score
@@ -442,8 +448,8 @@ function showRewardScreen(score) {
 
   // Play the winning sound
   winningSound.currentTime = 0; // Reset the sound to the beginning
+  winningSound.volume = 0.4; // Set to 30% volume
   winningSound.play();
-  winningSound.volume = 0.7; // Set to 70% volume (adjust as needed)
 
   // Set reward details
   rewardTitle.textContent = `You Unlocked: ${reward.title}`;
@@ -494,6 +500,41 @@ function startCountdown(duration, display) {
       display.textContent = "Reward expired!";
     }
   }, 1000);
+}
+
+// Function to update the progress meter
+function updateProgressMeter(score) {
+  const progressIndicator = document.getElementById("progress-indicator");
+  const checkpoints = document.querySelectorAll(".checkpoint");
+
+  // Define the score thresholds for each checkpoint
+  const thresholds = [0, 50, 100, 300, 500];
+
+  // Calculate the progress percentage based on the score
+  let progressPercentage = 0;
+  for (let i = 0; i < thresholds.length - 1; i++) {
+    if (score >= thresholds[i] && score < thresholds[i + 1]) {
+      const range = thresholds[i + 1] - thresholds[i];
+      const progressInRange = score - thresholds[i];
+      progressPercentage = ((i * 25) + (progressInRange / range) * 25); // Map to 0-100%
+      break;
+    } else if (score >= thresholds[thresholds.length - 1]) {
+      progressPercentage = 100; // Cap at 100% for scores >= 500
+    }
+  }
+
+  // Update the progress bar width
+  progressIndicator.style.width = `${progressPercentage}%`;
+
+  // Highlight the checkpoints the player has reached
+  checkpoints.forEach((checkpoint) => {
+    const checkpointScore = parseInt(checkpoint.getAttribute("data-score"));
+    if (score >= checkpointScore) {
+      checkpoint.style.color = "#ff0000"; // Highlight reached checkpoints in red
+    } else {
+      checkpoint.style.color = "#fff"; // Reset color for unreached checkpoints
+    }
+  });
 }
 
 
