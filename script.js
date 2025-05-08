@@ -411,7 +411,7 @@ function resumeBackgroundMusic() {
 
 // Reward thresholds and codes
 const rewards = [
-  { score: 50, title: "10% OFF the UNIFORM", code: "use code: youcoulddobetter" },
+  { score: 3, title: "10% OFF the UNIFORM", code: "use code: youcoulddobetter" },
   { score: 100, title: "15% OFF the UNIFORM", code: "use code: thatsalilbetter" },
   { score: 300, title: "25% OFF the UNIFORM", code: "use code: okchilloutyoucantdobetterthenthis" },
   { score: 500, title: "Free Uniforms Shirt", code: "use code: 500?youreallydidthat?" },
@@ -510,6 +510,9 @@ function updateProgressMeter(score) {
   // Define the score thresholds for each checkpoint
   const thresholds = [0, 50, 100, 300, 500];
 
+  // Update checkpoint markers
+  updateCheckpointMarkers(score);
+
   // Calculate the progress percentage based on the score
   let progressPercentage = 0;
   for (let i = 0; i < thresholds.length - 1; i++) {
@@ -525,16 +528,44 @@ function updateProgressMeter(score) {
 
   // Update the progress bar width
   progressIndicator.style.width = `${progressPercentage}%`;
+}
 
-  // Highlight the checkpoints the player has reached
+// Function to dynamically position checkpoint markers
+function updateCheckpointMarkers() {
+  const checkpoints = [
+    { score: 50, label: "10% OFF" },
+    { score: 100, label: "15% OFF" },
+    { score: 300, label: "25% OFF" },
+    { score: 500, label: "FREE SHIRT" },
+  ];
+
+  const maxScore = 500; // Maximum score for the progress bar
+  const progressBar = document.getElementById("progress-bar");
+
+  // Clear existing markers
+  progressBar.querySelectorAll(".checkpoint-marker").forEach(marker => marker.remove());
+
+  // Add checkpoint markers dynamically
   checkpoints.forEach((checkpoint) => {
-    const checkpointScore = parseInt(checkpoint.getAttribute("data-score"));
-    if (score >= checkpointScore) {
-      checkpoint.style.color = "#ff0000"; // Highlight reached checkpoints in red
-    } else {
-      checkpoint.style.color = "#fff"; // Reset color for unreached checkpoints
-    }
+    const position = (checkpoint.score / maxScore) * 100; // Calculate percentage position
+    const marker = document.createElement("div");
+    marker.className = "checkpoint-marker";
+    marker.style.left = `${position}%`;
+
+    const line = document.createElement("div");
+    line.className = "line";
+
+    const label = document.createElement("span");
+    label.className = "label";
+    label.textContent = checkpoint.label;
+
+    marker.appendChild(line);
+    marker.appendChild(label);
+    progressBar.appendChild(marker);
   });
 }
+
+// Call the function to update the checkpoint markers
+updateCheckpointMarkers();
 
 
