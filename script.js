@@ -411,7 +411,7 @@ function resumeBackgroundMusic() {
 
 // Reward thresholds and codes
 const rewards = [
-  { score: 3, title: "10% OFF the UNIFORM", code: "use code: youcoulddobetter" },
+  { score: 50, title: "10% OFF the UNIFORM", code: "use code: youcoulddobetter" },
   { score: 100, title: "15% OFF the UNIFORM", code: "use code: thatsalilbetter" },
   { score: 300, title: "25% OFF the UNIFORM", code: "use code: okchilloutyoucantdobetterthenthis" },
   { score: 500, title: "Free Uniforms Shirt", code: "use code: 500?youreallydidthat?" },
