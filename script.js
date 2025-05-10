@@ -164,7 +164,15 @@ function spawnObstacle() {
 
 // Function to check for collision
 function checkCollision(player, obstacle) {
-  const buffer = 40; // Adjust this value to increase or decrease sensitivity
+  const screenWidth = window.innerWidth;
+  let buffer = 40; // Default buffer
+
+  // Adjust buffer for larger screens
+  if (screenWidth > 1200) {
+    buffer = 60;
+  } else if (screenWidth < 768) {
+    buffer = 20; // Smaller buffer for smaller screens
+  }
 
   const playerRect = player.getBoundingClientRect();
   const obstacleRect = obstacle.getBoundingClientRect();
@@ -175,16 +183,16 @@ function checkCollision(player, obstacle) {
 
   // Check for collision with added buffer
   const isColliding = (
-    playerRect.right - buffer > obstacleRect.left + buffer && // Player's right side is past the obstacle's left side
-    playerRect.left + buffer < obstacleRect.right - buffer && // Player's left side is before the obstacle's right side
-    playerRect.bottom - buffer > obstacleRect.top + buffer && // Player's bottom is below the obstacle's top
-    playerRect.top + buffer < obstacleRect.bottom - buffer    // Player's top is above the obstacle's bottom
+    playerRect.right - buffer > obstacleRect.left + buffer &&
+    playerRect.left + buffer < obstacleRect.right - buffer &&
+    playerRect.bottom > obstacleRect.top &&
+    playerRect.top < obstacleRect.bottom
   );
 
   if (isColliding) {
     console.log("Collision detected! Stopping player animations...");
-    stopRunning(); // Ensure the player stops running immediately
-    player.classList.remove("jump", "jumping"); // Remove jump-related classes if the player is jumping
+    stopRunning();
+    player.classList.remove("jump", "jumping");
   }
 
   console.log("Collision check:", isColliding);
