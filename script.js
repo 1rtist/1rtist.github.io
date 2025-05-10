@@ -1,6 +1,6 @@
 let score = 0;
 let speed = 8; // Starting speed of the obstacles
-let obstacleFrequency = 1800; // Increase to 2000ms (2 seconds) for more spacing
+let obstacleFrequency = 2500; // Start with 2.5 seconds between obstacles
 let gameInterval;
 let gameStarted = false; // Track if the game has started
 let gameOver = false; // Track if the game is over
@@ -164,7 +164,7 @@ function spawnObstacle() {
 
 // Function to check for collision
 function checkCollision(player, obstacle) {
-  const buffer = 20; // Adjust this value to increase or decrease sensitivity
+  const buffer = 40; // Adjust this value to increase or decrease sensitivity
 
   const playerRect = player.getBoundingClientRect();
   const obstacleRect = obstacle.getBoundingClientRect();
@@ -207,11 +207,11 @@ function increaseScore() {
 
     // Increase speed every 10 points
     if (score % 10 === 0) {
-      speed = Math.min(speed + 1.5, 15); // Increase speed by 1.5, cap at 15
+      speed = Math.min(speed + 1, 12); // Increase speed by 1, cap at 12 instead of 15
       console.log(`Speed increased to: ${speed}`);
 
       // Adjust obstacle frequency based on speed
-      obstacleFrequency = Math.max(obstacleFrequency - 100, 800); // Decrease frequency, cap at 800ms
+      obstacleFrequency = Math.max(obstacleFrequency - 25, 1500); // Cap at 1500ms instead of 1000ms
       console.log(`Obstacle frequency adjusted to: ${obstacleFrequency}ms`);
 
       // Restart obstacle spawning with the new frequency
@@ -411,10 +411,10 @@ function resumeBackgroundMusic() {
 
 // Reward thresholds and codes
 const rewards = [
-  { score: 50, title: "10% OFF the UNIFORM", code: "use code: youcoulddobetter" },
-  { score: 100, title: "15% OFF the UNIFORM", code: "use code: thatsalilbetter" },
-  { score: 300, title: "25% OFF the UNIFORM", code: "use code: okchilloutyoucantdobetterthenthis" },
-  { score: 500, title: "Free Uniforms Shirt", code: "use code: 500?youreallydidthat?" },
+  { score: 25, title: "10% OFF the UNIFORM", code: "use code: youcoulddobetter" },
+  { score: 50, title: "15% OFF the UNIFORM", code: "use code: thatsalilbetter" },
+  { score: 100, title: "25% OFF the UNIFORM", code: "use code: okchilloutyoucantdobetterthenthis" },
+  { score: 200, title: "Free Uniforms Shirt", code: "use code: 500?youreallydidthat?" },
 ];
 
 // Function to get the highest reward based on score
