@@ -165,29 +165,23 @@ function spawnObstacle() {
 // Function to check for collision
 function checkCollision(player, obstacle) {
   const screenWidth = window.innerWidth;
-  let buffer = 40; // Default buffer
-
-  // Adjust buffer for larger screens
-  if (screenWidth > 1200) {
-    buffer = 60;
-  } else if (screenWidth < 768) {
-    buffer = 20; // Smaller buffer for smaller screens
-  }
+  // Horizontal buffer
+  const hBuffer = screenWidth < 768 ? 10 : 30;
+  // Vertical buffer (more forgiving on phones)
+  const vBuffer = screenWidth < 768 ? 30 : 0;
 
   const playerRect = player.getBoundingClientRect();
   const obstacleRect = obstacle.getBoundingClientRect();
 
-  // Debugging logs to verify bounding box positions
-  console.log("Player Rect:", playerRect);
-  console.log("Obstacle Rect:", obstacleRect);
+  const horizontalOverlap =
+    playerRect.right - hBuffer > obstacleRect.left + hBuffer &&
+    playerRect.left + hBuffer < obstacleRect.right - hBuffer;
 
-  // Check for collision with added buffer
-  const isColliding = (
-    playerRect.right - buffer > obstacleRect.left + buffer &&
-    playerRect.left + buffer < obstacleRect.right - buffer &&
-    playerRect.bottom > obstacleRect.top &&
-    playerRect.top < obstacleRect.bottom
-  );
+  const verticalOverlap =
+    playerRect.bottom - vBuffer > obstacleRect.top + vBuffer &&
+    playerRect.top + vBuffer < obstacleRect.bottom - vBuffer;
+
+  const isColliding = horizontalOverlap && verticalOverlap;
 
   if (isColliding) {
     console.log("Collision detected! Stopping player animations...");
@@ -195,7 +189,6 @@ function checkCollision(player, obstacle) {
     player.classList.remove("jump", "jumping");
   }
 
-  console.log("Collision check:", isColliding);
   return isColliding;
 }
 
