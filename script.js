@@ -164,27 +164,22 @@ function spawnObstacle() {
 
 // Function to check for collision
 function checkCollision(player, obstacle) {
-  const screenWidth = window.innerWidth;
-  // Horizontal buffer
-  const hBuffer = screenWidth < 768 ? 10 : 30;
-  // Vertical buffer (more forgiving on phones)
-  const vBuffer = screenWidth < 768 ? 30 : 0;
+  const buffer = 30; // Increase for more forgiveness, decrease for stricter collision
 
   const playerRect = player.getBoundingClientRect();
   const obstacleRect = obstacle.getBoundingClientRect();
 
   const horizontalOverlap =
-    playerRect.right - hBuffer > obstacleRect.left + hBuffer &&
-    playerRect.left + hBuffer < obstacleRect.right - hBuffer;
+    playerRect.right - buffer > obstacleRect.left + buffer &&
+    playerRect.left + buffer < obstacleRect.right - buffer;
 
   const verticalOverlap =
-    playerRect.bottom - vBuffer > obstacleRect.top + vBuffer &&
-    playerRect.top + vBuffer < obstacleRect.bottom - vBuffer;
+    playerRect.bottom - buffer > obstacleRect.top + buffer &&
+    playerRect.top + buffer < obstacleRect.bottom - buffer;
 
   const isColliding = horizontalOverlap && verticalOverlap;
 
   if (isColliding) {
-    console.log("Collision detected! Stopping player animations...");
     stopRunning();
     player.classList.remove("jump", "jumping");
   }
@@ -568,5 +563,7 @@ function updateCheckpointMarkers() {
 
 // Call the function to update the checkpoint markers
 updateCheckpointMarkers();
+
+
 
 
