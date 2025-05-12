@@ -410,7 +410,7 @@ const rewards = [
   { score: 25, title: "10% OFF the UNIFORM", code: "use code: youcoulddobetter" },
   { score: 50, title: "15% OFF the UNIFORM", code: "use code: thatsalilbetter" },
   { score: 100, title: "25% OFF the UNIFORM", code: "use code: okchilloutyoucantdobetterthenthis" },
-  { score: 200, title: "Free Uniforms Shirt", code: "use code: 500?youreallydidthat?" },
+  { score: 200, title: "Free Uniform Shirt", code: "use code: 500?youreallydidthat?" },
 ];
 
 // Function to get the highest reward based on score
